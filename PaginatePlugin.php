@@ -6,10 +6,12 @@
 
 class PaginatePlugin extends Omeka_Plugin_AbstractPlugin
 {
+
     /**
      * @var array Hooks for the plugin.
      */
 
+    // NB: The following overrides default requests for collections#show pages
     protected $_hooks = array('define_routes');
 
     protected $_filters = array('public_navigation_main');
@@ -27,12 +29,9 @@ class PaginatePlugin extends Omeka_Plugin_AbstractPlugin
         $router -> addRoute('paginate_show', $paginate_route);	
     }  
 
-
-
     public function searchForm($args, $view) {
       return $view ->partial('paginate/show.php', array('query' => ''));
     }
-
 
     public function filterPublicNavigationMain($navArray)
     {
@@ -42,7 +41,4 @@ class PaginatePlugin extends Omeka_Plugin_AbstractPlugin
       );
       return $navArray;
     }
-
-
 }
-

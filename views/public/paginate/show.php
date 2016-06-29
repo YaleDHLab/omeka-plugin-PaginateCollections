@@ -1,7 +1,26 @@
 <?php
+  // define the current collection class
+  $collectionclass = ('collection' .$requested_collection_id);
+  echo head(array('bodyid'=>'trancription','bodyclass'=>$collectionclass)); 
+
+  // set the current collection title as the <title> value for the page
   $this->headTitle()->prepend( mysql_result($collection_title, 0) );
-  echo $this->headTitle();
+  echo $this->headTitle(); 
 ?>
+
+<link href="http://transcribe.library.yale.edu/projects/plugins/GuestUser/views/public/css/guest-user.css" rel="stylesheet" type="text/css">
+<link href="http://transcribe.library.yale.edu/projects/plugins/GuestUser/views/public/css/admin-bar.css" rel="stylesheet" type="text/css">
+<link href="http://transcribe.library.yale.edu/projects/plugins/GuestUser/views/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="http://transcribe.library.yale.edu/projects/themes/ani-yun-wiya/css/lib/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="http://transcribe.library.yale.edu/projects/themes/ani-yun-wiya/css/supersized.css" rel="stylesheet" type="text/css">
+
+<link href="http://fonts.googleapis.com/css?family=Arvo:400" rel="stylesheet" type="text/css">
+
+
+<script>
+  // use jQuery to add classes to body
+  $("body").addClass("collections show");
+</script>
 
 
 <style>
@@ -74,3 +93,6 @@ while ($row = mysql_fetch_array($query_response)) {
 }
 
 ?>
+
+
+<?php echo foot(); ?>

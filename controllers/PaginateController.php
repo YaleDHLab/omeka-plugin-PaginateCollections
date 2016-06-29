@@ -17,8 +17,8 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
     // urls to this route have the form: /collections/:id
     $split_url = explode("/", $requested_url);
 
-    // from the split url extract the id of the requested collection
-    $requested_collection_id = end($split_url);
+    // remove the query params from the last element of split_url
+    $requested_collection_id = explode( "?", end($split_url) )[0];
 
     // connect to mysql
     mysql_connect("localhost", "root", "winter44", true);
@@ -68,7 +68,7 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
       on oi.id = oet48table.record_id
       left join (select record_id, element_id, text as oetpercentcomplete from omeka_element_texts where element_id in (137)) as oet137table
       on oi.id = oet137table.record_id
-      order by oi.id;";
+      where collection_id = ".$requested_collection_id." order by oi.id limit ".$records_per_page." offset ".$required_offset.";";
 
     $query_response = mysql_query($item_query);
 

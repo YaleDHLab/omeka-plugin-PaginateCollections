@@ -68,7 +68,7 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
       on oi.id = oet48table.record_id
       left join (select record_id, element_id, text as oetpercentcomplete from omeka_element_texts where element_id in (137)) as oet137table
       on oi.id = oet137table.record_id
-      where collection_id = ".$requested_collection_id." order by oi.id limit ".$records_per_page." offset ".$required_offset.";";
+      where collection_id = ".$requested_collection_id." order by cast(oet137table.oetpercentcomplete as unsigned) limit ".$records_per_page." offset ".$required_offset.";";
 
     $query_response = mysql_query($item_query);
 

@@ -1,3 +1,8 @@
+<?php
+  $this->headTitle()->prepend( mysql_result($collection_title, 0) );
+  echo $this->headTitle();
+?>
+
 
 <style>
 @media (max-width: 767px) {

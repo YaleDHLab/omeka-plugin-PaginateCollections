@@ -49,10 +49,27 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
     $required_offset = $records_per_page * ( (int)$requested_page - 1);
 
     // query for the current page of records
-    $item_query = "SELECT * FROM omeka_items 
-        WHERE collection_id = ".$requested_collection_id
-        ." limit ".$records_per_page
-        ." offset ".$required_offset." ;";
+    $item_query = "select oi.id, of.filename, oet50table.oettitle,  oet40table.oetdate,  oet48table.oetboxfolder, oet137table.oetpercentcomplete
+      from omeka_items as oi 
+      join (
+        select filename, item_id from omeka_files as omfi 
+         WHERE id IN (
+                     SELECT min(id) 
+                       FROM omeka_files 
+                      GROUP BY item_id
+                   )
+      ) as of
+      on oi.id = of.item_id
+      left join (select record_id, element_id, text as oettitle from omeka_element_texts where element_id in (50)) as oet50table
+      on oi.id = oet50table.record_id
+      left join (select record_id, element_id, text as oetdate from omeka_element_texts where element_id in (40)) as oet40table
+      on oi.id = oet40table.record_id
+      left join (select record_id, element_id, text as oetboxfolder from omeka_element_texts where element_id in (48)) as oet48table
+      on oi.id = oet48table.record_id
+      left join (select record_id, element_id, text as oetpercentcomplete from omeka_element_texts where element_id in (137)) as oet137table
+      on oi.id = oet137table.record_id
+      order by oi.id;";
+
     $query_response = mysql_query($item_query);
 
     //$first_item = mysql_fetch_assoc($query_response);

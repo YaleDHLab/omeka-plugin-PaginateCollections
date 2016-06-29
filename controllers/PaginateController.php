@@ -24,6 +24,29 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
     mysql_connect("localhost", "root", "winter44", true);
     mysql_select_db("omeka") or die("Could not select the omeka db");
 
+    ////////////
+    // header //
+    ////////////
+    
+    // pass the collection_title and collection_description to the view
+    $collection_title_query = "SELECT text 
+      from omeka_element_texts 
+      where element_id = 50
+      and record_id = ".$requested_collection_id.";";
+
+    $collection_title = mysql_query($collection_title_query); 
+
+    $collection_description_query = "SELECT text 
+      from omeka_element_texts 
+      where element_id = 41
+      and record_id = ".$requested_collection_id.";";
+
+    $collection_description = mysql_query($collection_description_query); 
+
+    //////////
+    // body //
+    //////////
+
     // check to see if the requested collection id is in the db and public
     $n_collections_query = "SELECT * FROM omeka_collections 
         WHERE id = ".$requested_collection_id 
@@ -81,7 +104,9 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
         'requested_collection_id',
         'total_items',
         'query_response',
-        'n_collections_response'
+        'n_collections_response',
+        'collection_title',
+        'collection_description'
     ));
 
     // calculate percentage completed 

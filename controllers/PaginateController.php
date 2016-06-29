@@ -109,8 +109,6 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
         'collection_description'
     ));
 
-    // calculate percentage completed 
-
 
   }
 }

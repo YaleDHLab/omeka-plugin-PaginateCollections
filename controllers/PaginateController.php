@@ -102,20 +102,47 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
 
     // query for the total number of items,
     // and the number of items that have been transcribed
-       
+    $total_files_query = "select count(id)
+      from omeka_files
+      where item_id in (
+        select id 
+        from omeka_items 
+        where collection_id = ".$requested_collection_id."
+      );";
+
+    // Only transcribed pages are sent to the omeka_element_texts
+    // database, so querying for those tells us how many files 
+    // (ie pages) from the current collection have been trasncribed
+    $total_files_transcribed_query = "select count(id) 
+      from omeka_element_texts 
+      where element_id = 136
+      and record_id in (
+        select id 
+        from omeka_files 
+        where item_id in (
+          select id 
+          from omeka_items 
+          where collection_id = ".$requested_collection_id."
+        )
+      );
+    ";
+
+    $total_files = mysql_result( mysql_query($total_files_query), 0 );
+    $total_files_transcribed = mysql_result( mysql_query($total_files_transcribed_query), 0 );
+    $total_percent_complete = ( $total_files_transcribed / $total_files ) * 100;
 
     // define variable then pass it to the view
     $this->view->assign(compact(
         'requested_url',
         'requested_collection_id',
-        'total_items',
+        'total_files',
+        'total_files_transcribed',
+        'total_percent_complete',
         'query_response',
         'n_collections_response',
         'collection_title',
         'collection_description',
         'application_root'
     ));
-
-
   }
 }

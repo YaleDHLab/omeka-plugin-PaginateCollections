@@ -29,10 +29,6 @@ class PaginatePlugin extends Omeka_Plugin_AbstractPlugin
         $router -> addRoute('paginate_show', $paginate_route);	
     }  
 
-    public function searchForm($args, $view) {
-      return $view ->partial('paginate/show.php', array('query' => ''));
-    }
-
     public function filterPublicNavigationMain($navArray)
     {
       $navArray["Show Paginate"] = array(

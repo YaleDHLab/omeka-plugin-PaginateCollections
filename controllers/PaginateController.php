@@ -131,6 +131,13 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
     $total_files_transcribed = mysql_result( mysql_query($total_files_transcribed_query), 0 );
     $total_percent_complete = ( $total_files_transcribed / $total_files ) * 100;
 
+    // send the view the total number of pages for the current collection
+    $total_items_query = "select count(id) 
+      from omeka_items 
+      where collection_id = ".$requested_collection_id;
+    $total_items = mysql_result( mysql_query($total_items_query), 0);
+    $total_pages = $total_items / $records_per_page;
+
     // define variable then pass it to the view
     $this->view->assign(compact(
         'requested_url',
@@ -142,7 +149,9 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
         'n_collections_response',
         'collection_title',
         'collection_description',
-        'application_root'
+        'application_root',
+        'total_pages',
+        'requested_page'
     ));
   }
 }

@@ -24,7 +24,7 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
     $application_root = implode("/", array_slice($split_url, 0, 2) )."/";
 
     // connect to mysql
-    mysql_connect("localhost", "root", "winter44", true);
+    mysql_connect("localhost", "root", "******", true);
     mysql_select_db("omeka") or die("Could not select the omeka db");
 
     ////////////

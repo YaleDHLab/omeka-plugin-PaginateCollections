@@ -20,6 +20,9 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
     // remove the query params from the last element of split_url
     $requested_collection_id = explode( "?", end($split_url) )[0];
 
+    // parse out the application root for the view
+    $application_root = implode("/", array_slice($split_url, 0, 2) )."/";
+
     // connect to mysql
     mysql_connect("localhost", "root", "winter44", true);
     mysql_select_db("omeka") or die("Could not select the omeka db");
@@ -72,7 +75,7 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
     $required_offset = $records_per_page * ( (int)$requested_page - 1);
 
     // query for the current page of records
-    $item_query = "select oi.id, of.filename, oet50table.oettitle,  oet40table.oetdate,  oet48table.oetboxfolder, oet137table.oetpercentcomplete
+    $item_query = "select oi.id, of.filename, oet50table.oettitle, oet39table.oetauthor,  oet40table.oetdate,  oet48table.oetboxfolder, oet137table.oetpercentcomplete
       from omeka_items as oi 
       join (
         select filename, item_id from omeka_files as omfi 
@@ -87,6 +90,8 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
       on oi.id = oet50table.record_id
       left join (select record_id, element_id, text as oetdate from omeka_element_texts where element_id in (40)) as oet40table
       on oi.id = oet40table.record_id
+      left join (select record_id, element_id, text as oetauthor from omeka_element_texts where element_id in (39)) as oet39table
+      on oi.id = oet39table.record_id
       left join (select record_id, element_id, text as oetboxfolder from omeka_element_texts where element_id in (48)) as oet48table
       on oi.id = oet48table.record_id
       left join (select record_id, element_id, text as oetpercentcomplete from omeka_element_texts where element_id in (137)) as oet137table
@@ -95,8 +100,9 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
 
     $query_response = mysql_query($item_query);
 
-    //$first_item = mysql_fetch_assoc($query_response);
-    $total_items = mysql_num_rows( $query_response );
+    // query for the total number of items,
+    // and the number of items that have been transcribed
+       
 
     // define variable then pass it to the view
     $this->view->assign(compact(
@@ -106,7 +112,8 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
         'query_response',
         'n_collections_response',
         'collection_title',
-        'collection_description'
+        'collection_description',
+        'application_root'
     ));
 
 

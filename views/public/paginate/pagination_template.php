@@ -39,14 +39,15 @@
             };
             echo "</a>";
           };
-        };
-        // if there are more pages to the right, create a > div
-        $next_page = $start_page + $pages_to_display + 1;
-        if ( in_array($next_page, $page_array) ) {
-          echo $query_param_root.$next_page.">";
-          echo "<div class='page'>&rsaquo;</div>";
-          echo "</a>";
-        };
+
+          // if there are more pages to the right, create a > div
+          $next_page = $start_page + $pages_to_display + 1;
+          if ( in_array($next_page, $page_array) ) {
+            echo $query_param_root.$next_page.">";
+            echo "<div class='page'>&rsaquo;</div>";
+            echo "</a>";
+          };
+        }; 
       ?>
     </div>
   </div>

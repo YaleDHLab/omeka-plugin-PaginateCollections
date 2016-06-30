@@ -55,11 +55,27 @@
   </div>
 </div>
 
-<div class="collectionTitle" id="pageshavebeen"></div>
+<div class="collectionTitle" id="pageshavebeen">
+  <strong><?php echo $total_files_transcribed; ?></strong> of 
+  <strong><?php echo $total_files; ?></strong> pages transcribed
+</div>
 <div class="main">
   <div class="container-fluid">
     <div class="row-fluid">
-      <div id="progressBar"></div>
+      <div id="progressBar">
+        <div id="collectionProgress" class="progress">
+          <div class="progress-bar"
+            aria-valuenow="<?php echo $total_percent_complete; ?>"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            style="width:<?php echo $total_percent_complete; ?>%"
+          >
+            <span class="sr-only">
+              <?php echo $total_percent_complete; ?>% Completed
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -129,5 +145,6 @@
   </div>
 </div> 
 
-<?php fire_plugin_hook('public_collections_show', array('view' => $this, 'collection' => $requested_collection_id)); ?>
+<?php fire_plugin_hook('public_collections_show', 
+  array('view' => $this, 'collection' => $requested_collection_id)); ?>
 <?php echo foot(); ?>

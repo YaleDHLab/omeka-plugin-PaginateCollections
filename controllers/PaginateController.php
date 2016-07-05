@@ -147,7 +147,9 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
       from omeka_items 
       where collection_id = ".$requested_collection_id;
     $total_items = mysql_result( mysql_query($total_items_query), 0);
-    $total_pages = $total_items / $records_per_page;
+
+    // calculate the total pages and round up to nearest integer
+    $total_pages = ceil($total_items / $records_per_page);
 
     // define variable then pass it to the view
     $this->view->assign(compact(

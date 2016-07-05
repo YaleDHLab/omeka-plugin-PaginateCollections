@@ -3,6 +3,9 @@
   $collection_class = ('collection' .$requested_collection_id);
   echo head(array('bodyclass'=>$collection_class)); 
 
+  // manually set the encoding
+  header('Content-Type: text/html; charset=utf-8');
+
   // set the current collection title as the <title> value for the page
   $this->headTitle()->prepend( mysql_result($collection_title, 0) );
   echo $this->headTitle(); 

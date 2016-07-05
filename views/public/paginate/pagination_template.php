@@ -23,7 +23,13 @@
             "?page=";
 
           // if there are more pages to the left, create a < div
+          // and a << div
           if ( in_array($start_page, $page_array) ) {
+            // first create the << div
+            echo $query_param_root."1>";
+            echo "<div class='page'>&lsaquo;&lsaquo;</div>";
+            echo "</a>";
+
             echo $query_param_root. $start_page.">";
             echo "<div class='page'>&lsaquo;</div>";
             echo "</a>";
@@ -41,10 +47,15 @@
           };
 
           // if there are more pages to the right, create a > div
+          // and a >> div
           $next_page = $start_page + $pages_to_display + 1;
           if ( in_array($next_page, $page_array) ) {
             echo $query_param_root.$next_page.">";
             echo "<div class='page'>&rsaquo;</div>";
+            echo "</a>";
+
+            echo $query_param_root. $total_pages .">";
+            echo "<div class='page'?>&rsaquo;&rsaquo;</div>";
             echo "</a>";
           };
         }; 

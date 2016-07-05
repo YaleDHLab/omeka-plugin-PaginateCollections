@@ -17,8 +17,19 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
     // urls to this route have the form: /collections/:id
     $split_url = explode("/", $requested_url);
 
-    // remove the query params from the last element of split_url
-    $requested_collection_id = explode( "?", end($split_url) )[0];
+    // parse out the collection id
+    $requested_collection_id = end($split_url);
+
+    // remove the query params (if any) from the collection id
+    if (strpos($requested_collection_id, "?") !== FALSE) {
+      $split_collection_id = explode("?", $requested_collection_id);
+      $requested_collection_id = $split_collection_id[0];
+    };
+ 
+    // remove the query params (if any) from the collection id
+    if (strpos($requested_collection_id, "?") !== FALSE) {
+      $requested_collection_id = explode("?", $requested_collection_id)[0];
+    };
 
     // parse out the application root for the view
     $application_root = implode("/", array_slice($split_url, 0, 2) )."/";

@@ -97,7 +97,7 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
                    )
       ) as of
       on oi.id = of.item_id
-      left join (select record_id, element_id, text as oettitle from omeka_element_texts where element_id in (50)) as oet50table
+      left join (select record_id, element_id, text as oettitle from omeka_element_texts where element_id in (50) and record_type = 'Item') as oet50table
       on oi.id = oet50table.record_id
       left join (select record_id, element_id, text as oetdate from omeka_element_texts where element_id in (40)) as oet40table
       on oi.id = oet40table.record_id

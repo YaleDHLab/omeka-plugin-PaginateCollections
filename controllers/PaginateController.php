@@ -22,12 +22,6 @@ class Paginate_PaginateController extends Omeka_Controller_AbstractActionControl
 
     // remove the query params (if any) from the collection id
     if (strpos($requested_collection_id, "?") !== FALSE) {
-      $split_collection_id = explode("?", $requested_collection_id);
-      $requested_collection_id = $split_collection_id[0];
-    };
- 
-    // remove the query params (if any) from the collection id
-    if (strpos($requested_collection_id, "?") !== FALSE) {
       $requested_collection_id = explode("?", $requested_collection_id)[0];
     };
 

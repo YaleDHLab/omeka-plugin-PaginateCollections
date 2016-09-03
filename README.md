@@ -5,8 +5,8 @@ This plugin implments pagination for the collections/show/:id routes within the 
 
 ```
 # download the source within your omeka install's plugins directory
-git clone https://github.com/YaleDHLab/plugin-PaginateCollections
-mv plugin-PaginateCollections Paginate
+git clone https://github.com/YaleDHLab/omeka-plugin-PaginateCollections
+mv omeka-plugin-PaginateCollections Paginate
 
 # set the omeka db name, user, and password in lines 27 and 28
 vim Paginate/controllers/PaginateController.php
